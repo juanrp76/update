@@ -1,1 +1,6 @@
-aqui añadir los datos
+{
+  "versionCode": 50,
+  "versionName": "1.0.49",
+  "downloadUrl": "https://www.mediafire.com/file/xuf3r0q6fxifcc9/JRPPlayer.apk/file",
+  "changelog": "Nueva versión con mejoras en el reproductor y traducciones completadas."
+}
