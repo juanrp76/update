@@ -1,0 +1,2 @@
+1. sistema update mediante json
+El sistema es simple, leer el json y obtener los datos para lanzar el actualizador.
