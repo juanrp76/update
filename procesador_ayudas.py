@@ -1,17 +1,14 @@
 import json
 import os
-import google.generativeai as genai
+from google import genai
 
-# Configurar la API gratuita de Gemini
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
+# Inicializar cliente con la nueva librería oficial de Google GenAI
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 def procesar_texto_subvencion(texto_legal_crudo: str) -> dict:
-    # Usamos Gemini Flash (rápido y con nivel gratuito)
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    
     prompt = f"""
     Eres un experto en legislación y subvenciones en España. Analiza este texto legal 
-    y responde EXCLUSIVAMENTE con un JSON válido que tenga esta estructura exacta (sin texto extra):
+    y responde EXCLUSIVAMENTE con un JSON válido que tenga esta estructura exacta (sin texto extra ni formato markdown):
     {{
       "id": "identificador_unico_minusculas",
       "titulo": "Título oficial",
@@ -32,7 +29,11 @@ def procesar_texto_subvencion(texto_legal_crudo: str) -> dict:
     {texto_legal_crudo}
     """
 
-    response = model.generate_content(prompt)
+    # Usamos el modelo actual y recomendado de Google Flash
+    response = client.models.generate_content(
+        model='gemini-2.5-flash',
+        contents=prompt,
+    )
     
     # Limpiar el texto devuelto por si incluye bloques de código markdown tipo ```json
     texto_limpio = response.text.replace("```json", "").replace("```", "").strip()
@@ -44,4 +45,4 @@ if __name__ == "__main__":
     
     with open("ayudas.json", "w", encoding="utf-8") as f:
         json.dump([ayuda_procesada], f, ensure_ascii=False, indent=4)
-    print("JSON generado gratis con Gemini.")
+    print("JSON generado correctamente con Gemini.")
