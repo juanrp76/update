@@ -1,0 +1,36 @@
+name: Actualizar Subvenciones Automáticas
+
+on:
+  schedule:
+    - cron: '0 8 * * *' # Ejecuta todos los días a las 8:00 UTC
+  workflow_dispatch:   # Permite lanzarlo a mano cuando quieras desde la pestaña "Actions" de GitHub
+
+jobs:
+  construir-json:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Permite al bot hacer commit y push de los cambios
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: pip install openai requests
+
+      - name: Ejecutar script de procesamiento
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python procesador_ayudas.py
+
+      - name: Auto-commitear y subir ayudas.json actualizado
+        run: |
+          git config --global user.name "Bot de Subvenciones"
+          git config --global user.email "bot@users.noreply.github.com"
+          git add ayudas.json
+          git commit -m "Actualización automática de el archivo ayudas.json" || exit 0
+          git push
