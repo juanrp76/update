@@ -29,9 +29,9 @@ def procesar_texto_subvencion(texto_legal_crudo: str) -> dict:
     {texto_legal_crudo}
     """
 
-    # Usamos el modelo actual y recomendado de Google Flash
+    # Usamos el modelo actualizado que pide la API de Google
     response = client.models.generate_content(
-        model='gemini-2.5-flash',
+        model='gemini-3.8-flash',
         contents=prompt,
     )
     
