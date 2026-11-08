@@ -1,0 +1,28 @@
+[
+    {
+        "id": "bono_alquiler_joven_madrid_2026",
+        "titulo": "Convocatoria Bono Alquiler Joven 2026",
+        "organismo": "Comunidad de Madrid",
+        "ccaa": "Comunidad de Madrid",
+        "edad_minima": null,
+        "edad_maxima": 35,
+        "ingresos_maximos_anuales": 24318,
+        "situacion_laboral": [
+            "empleado",
+            "autonomo",
+            "desempleado",
+            "pensionista",
+            "estudiante"
+        ],
+        "estado_civil_permitido": [
+            "Soltero/a",
+            "Casado/a",
+            "Separado/a o Divorciado/a",
+            "Viudo/a"
+        ],
+        "incompatible_con": [],
+        "exige_estar_cobrando": [],
+        "es_complementaria": false,
+        "url_oficial": "https://www.comunidad.madrid"
+    }
+]
