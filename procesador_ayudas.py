@@ -1,38 +1,65 @@
 import json
 import os
+import requests
 from google import genai
 
-# Inicializar cliente con la clave secreta de Gemini
+# Inicializar cliente de Gemini
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
-def obtener_catalogo_maestro() -> list[str]:
+def obtener_convocatorias_api_oficial() -> list[str]:
     """
-    Catálogo maestro estructurado con ayudas reales en España 
-    (vivienda, autónomos, empleo, pensiones contributivas y no contributivas, becas).
+    Consume directamente el endpoint oficial /convocatorias/ultimas de la BDNS
+    visto en su documentación técnica para extraer convocatorias reales.
     """
-    return [
-        "CONVOCATORIA BONO ALQUILER JOVEN. Comunidad de Madrid. Menores de 35 años, ingresos anuales inferiores a 24.318 euros.",
-        "AYUDAS DIGITALIZACION EMPRESAS Y AUTONOMOS (Kit Digital). Ministerio de Industria. Dirigido a autónomos y pymes en todo el territorio nacional.",
-        "PRESTACION POR CESE DE ACTIVIDAD PARA TRABAJADORES AUTONOMOS. Seguridad Social. Ayuda dirigida exclusivamente a autónomos en situación de cese.",
-        "PENSION NO CONTRIBUTIVA DE JUBILACION. IMSERSO. Mayores de 65 años con carencia de ingresos y rentas anuales inferiores a 7.250 euros.",
-        "PENSION NO CONTRIBUTIVA DE INVALIDEZ. IMSERSO. Personas con discapacidad del 65% o más, sin recursos económicos suficientes.",
-        "BECA ADQUISICION DE MATERIAL ESCOLAR Y LIBROS. Generalitat Valenciana. Familias con estudiantes en educación obligatoria con rentas bajas.",
-        "AYUDAS A LA MOVILIDAD SOSTENIBLE (PLAN MOVES III). Ministerio para la Transición Ecológica. Particulares y autónomos para compra de vehículos eléctricos.",
-        "SUBSIDIO POR DESEMPLEO PARA MAYORES DE 52 AÑOS. SEPE. Desempleados mayores de 52 años que hayan cotizado por desempleo.",
-        "INGRESO MINIMO VITAL (IMV). Seguridad Social. Unidades de convivencia o personas solas en situación de vulnerabilidad económica.",
-        "AYUDAS AL ALQUILER DE VIVIENDA PARA FAMILIAS NUMEROSAS. Generalitat de Catalunya. Familias numerosas con ingresos limitados."
-    ]
+    textos_legales = []
+    try:
+        # Endpoint oficial que devuelve las últimas convocatorias registradas
+        url_api = "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/ultimas"
+        
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+            'Accept': 'application/json'
+        }
+        
+        response = requests.get(url_api, headers=headers, timeout=15)
+        
+        if response.status_code == 200:
+            data = response.json()
+            # Dependiendo de si devuelve un array directo o un objeto con 'content'
+            items = data.get("content", data) if isinstance(data, dict) else data
+            
+            for item in items[:30]: # Cogemos un lote fresco de las últimas
+                descripcion = item.get("descripcion", "")
+                nivel1 = item.get("nivel1", "Nacional")
+                nivel2 = item.get("nivel2", "")
+                
+                texto_crudo = f"Ámbito: {nivel1}. Organismo: {nivel2}. Descripción: {descripcion}"
+                if len(texto_crudo.strip()) > 30:
+                    textos_legales.append(texto_crudo)
+                    
+            print(f"¡Éxito! Obtenidas {len(textos_legales)} convocatorias de la API oficial.")
+            
+    except Exception as e:
+        print(f"Aviso al consultar la API oficial de la BDNS: {e}")
 
-def procesar_texto_subvencion(texto_legal_crudo: str) -> dict:
-    """Envía el texto a Gemini para estructurarlo de forma estricta en JSON."""
+    # Respaldo por si hay restricciones puntuales de red en los servidores de GitHub
+    if not textos_legales:
+        print("Activando respaldo de seguridad...")
+        textos_legales = [
+            "Ámbito: NACIONAL. Organismo: MINISTERIO DE INDUSTRIA. Descripción: Ayudas del programa Kit Digital para digitalización de autónomos y pymes."
+        ]
+        
+    return textos_legales
+
+def procesar_con_gemini(texto_crudo: str) -> dict:
+    """Envía el texto oficial a Gemini para estructurarlo en el JSON que leerá Android."""
     prompt = f"""
-    Eres un experto en legislación y subvenciones en España. Analiza este texto legal 
-    y responde EXCLUSIVAMENTE con un JSON válido que tenga esta estructura exacta (sin texto extra ni formato markdown):
+    Analiza esta convocatoria oficial de la BDNS y responde EXCLUSIVAMENTE con un JSON válido con esta estructura exacta (sin formato markdown ni texto extra):
     {{
       "id": "identificador_unico_minusculas_sin_espacios",
-      "titulo": "Título oficial de la ayuda",
-      "organismo": "Organismo emisor (ej: Comunidad de Madrid, Ministerio, IMSERSO, SEPE...)",
-      "ccaa": "Comunidad Autónoma específica o 'Nacional'",
+      "titulo": "Título o descripción resumida de la ayuda",
+      "organismo": "Organismo emisor",
+      "ccaa": "Comunidad Autónoma o Nacional",
       "edad_minima": null,
       "edad_maxima": null,
       "ingresos_maximos_anuales": null,
@@ -41,11 +68,11 @@ def procesar_texto_subvencion(texto_legal_crudo: str) -> dict:
       "incompatible_con": [],
       "exige_estar_cobrando": [],
       "es_complementaria": false,
-      "url_oficial": "https://..."
+      "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias"
     }}
 
-    Texto legal a analizar:
-    {texto_legal_crudo}
+    Texto a analizar:
+    {texto_crudo}
     """
 
     response = client.models.generate_content(
@@ -53,26 +80,23 @@ def procesar_texto_subvencion(texto_legal_crudo: str) -> dict:
         contents=prompt,
     )
     
-    # Limpiar marcas de markdown por seguridad
     texto_limpio = response.text.replace("```json", "").replace("```", "").strip()
     return json.loads(texto_limpio)
 
 if __name__ == "__main__":
-    print("Iniciando procesamiento de subvenciones con Gemini...")
-    convocatorias_brutas = obtener_catalogo_maestro()
+    print("Iniciando sincronización con la API oficial de la BDNS...")
+    brutas = obtener_convocatorias_api_oficial()
     
-    lista_ayudas_totales = []
-    print(f"Procesando {len(convocatorias_brutas)} convocatorias...")
-    
-    for texto in convocatorias_brutas:
+    lista_final = []
+    for texto in brutas:
         try:
-            ayuda_json = procesar_texto_subvencion(texto)
-            lista_ayudas_totales.append(ayuda_json)
+            item_json = procesar_con_gemini(texto)
+            lista_final.append(item_json)
         except Exception as e:
-            print(f"Error procesando elemento: {e}")
-    
-    # Guardar el archivo JSON definitivo para la app Android
+            print(f"Error procesando item con IA: {e}")
+            
+    # Guardamos el archivo final que consumirá Retrofit en la app Android
     with open("ayudas.json", "w", encoding="utf-8") as f:
-        json.dump(lista_ayudas_totales, f, ensure_ascii=False, indent=4)
+        json.dump(lista_final, f, ensure_ascii=False, indent=4)
         
-    print(f"¡Éxito! Archivo 'ayudas.json' generado con {len(lista_ayudas_totales)} subvenciones.")
+    print(f"¡Listo! 'ayudas.json' actualizado con {len(lista_final)} registros oficiales.")
