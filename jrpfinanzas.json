@@ -1,6 +1,6 @@
 {
-  "versionCode": 1,
-  "versionName": "1.0.0",
-  "downloadUrl": "https://www.jrpplayer.es/contador.php?app=tube&accion=descargar"
-  "changelog": "Nueva versión 1.0.0\n - Correcciones varias"
+  "versionCode": 2,
+  "versionName": "1.1.0",
+  "downloadUrl": "https://www.jrpplayer.es/contador.php?app=finanzas&accion=descargar"
+  "changelog": "Nueva versión 1.1.0\n - Correcciones varias"
 }
