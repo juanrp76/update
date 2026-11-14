@@ -1,12 +1,14 @@
 import json
 import requests
 
-def obtener_ayudas_directas_bdns() -> list[dict]:
+def obtener_todas_las_ayudas_con_enlaces() -> list[dict]:
     """
-    Descarga el lote masivo directamente de la API oficial de la BDNS 
-    sin intermediarios ni IA, mapeando los campos reales de forma limpia.
+    Descarga el listado masivo de la BDNS y construye automáticamente 
+    los enlaces oficiales de consulta y tramitación para la app Android.
     """
-    url = "https://www.pap.hacienda.gob.es/bdnstrans/api/convocatorias/busqueda?vpd=GE&page=0&pageSize=1000&order=fechaRecepcion&direccion=desc"
+    todas_las_convocatorias = []
+    page = 0
+    page_size = 1000
     
     headers = {
         'Accept': 'application/json, text/plain, */*',
@@ -20,71 +22,62 @@ def obtener_ayudas_directas_bdns() -> list[dict]:
         'XSRF-TOKEN': 'fdcc2c56-6806-458b-8951-68c1c9724085'
     }
 
-    try:
-        print("Consultando la API oficial de la BDNS...")
-        response = requests.get(url, headers=headers, cookies=cookies, timeout=25)
+    print("Iniciando descarga masiva de convocatorias con enlaces oficiales...")
+
+    while True:
+        url = f"https://www.pap.hacienda.gob.es/bdnstrans/api/convocatorias/busqueda?vpd=GE&page={page}&pageSize={page_size}&order=fechaRecepcion&direccion=desc"
         
-        if response.status_code == 200:
-            data = response.json()
-            items = data.get("content", [])
-            print(f"¡Éxito! Se han obtenido {len(items)} convocatorias brutas.")
-            return items
-        else:
-            print(f"Error en la API: Código {response.status_code}")
-    except Exception as e:
-        print(f"Excepción al conectar con la API: {e}")
-        
-    return []
+        try:
+            response = requests.get(url, headers=headers, cookies=cookies, timeout=25)
+            if response.status_code == 200:
+                data = response.json()
+                items = data.get("content", [])
+                
+                if not items:
+                    break
+                    
+                todas_las_convocatorias.extend(items)
+                print(f"-> Página {page}: cargadas {len(items)} ayudas. Acumulado: {len(todas_las_convocatorias)}")
+                
+                if len(items) < page_size:
+                    break
+                page += 1
+            else:
+                break
+        except Exception as e:
+            print(f"Error de conexión: {e}")
+            break
+            
+    return todas_las_convocatorias
 
 if __name__ == "__main__":
-    convocatorias_brutas = obtener_ayudas_directas_bdns()
+    brutas = obtener_todas_las_ayudas_con_enlaces()
+    lista_final = []
     
-    lista_ayudas_finales = []
-    
-    for item in convocatorias_brutas:
-        numero_convocatoria = str(item.get("numeroConvocatoria", ""))
+    for item in brutas:
+        num_convocatoria = str(item.get("numeroConvocatoria", ""))
         descripcion = item.get("descripcion", "")
         nivel1 = item.get("nivel1", "Nacional")
         nivel2 = item.get("nivel2", "Organismo público")
         
-        # Mapeo directo y estructurado sin depender de modelos de lenguaje
+        # Construcción limpia de los enlaces oficiales
+        url_detalle_bdns = f"https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/{num_convocatoria}"
+        
         ayuda_mapeada = {
-            "id": numero_convocatoria,
+            "id": num_convocatoria,
             "titulo": descripcion,
             "organismo": nivel2,
             "ccaa": nivel1,
-            "edad_minima": None,
-            "edad_maxima": None,
-            "ingresos_maximos_anuales": None,
-            "situacion_laboral": ["empleado", "autonomo", "desempleado", "pensionista", "estudiante"],
-            "estado_civil_permitido": ["Soltero/a", "Casado/a", "Separado/a o Divorciado/a", "Viudo/a"],
-            "incompatible_con": [],
-            "exige_estar_cobrando": [],
-            "es_complementaria": False,
-            "url_oficial": f"https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatoria/{numero_convocatoria}"
+            "mrr": item.get("mrr", False),
+            "fecha_recepcion": item.get("fechaRecepcion", ""),
+            "fecha_inicio_solicitud": item.get("fechaInicioSolicitud", None),
+            "fecha_fin_solicitud": item.get("fechaFinSolicitud", None),
+            "url_oficial": url_detalle_bdns
         }
-        lista_ayudas_finales.append(ayuda_mapeada)
-        
-    # Respaldo por si la API viniera vacía
-    if not lista_ayudas_finales:
-        lista_ayudas_finales = [{
-            "id": "respaldo_emergencia",
-            "titulo": "Ayuda de respaldo predeterminada",
-            "organismo": "Ministerio",
-            "ccaa": "Nacional",
-            "edad_minima": None,
-            "edad_maxima": None,
-            "ingresos_maximos_anuales": None,
-            "situacion_laboral": ["empleado", "autonomo", "desempleado"],
-            "estado_civil_permitido": ["Soltero/a", "Casado/a"],
-            "incompatible_con": [],
-            "exige_estar_cobrando": [],
-            "es_complementaria": False,
-            "url_oficial": "https://www.pap.hacienda.gob.es"
-        }]
+        lista_final.append(ayuda_mapeada)
 
-    # Guardar el archivo definitivo para tu app Android
+    # Guardar JSON definitivo para Retrofit y Room en Android
     with open("ayudas.json", "w", encoding="utf-8") as f:
-        json.dump(lista_ayudas_finales, f, ensure_ascii=False, indent=4)
+        json.dump(lista_final, f, ensure_ascii=False, indent=4)
         
-    print(f"¡Éxito total! Archivo 'ayudas.json' generado con {len(lista_ayudas_finales)} ayudas directas y limpias.")
+    print(f"¡Fichero 'ayudas.json' generado con éxito con {len(lista_final)} registros y enlaces oficiales integrados!")
