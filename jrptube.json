@@ -1,6 +1,6 @@
 {
-  "versionCode": 71,
-  "versionName": "1.7.1",
+  "versionCode": 80,
+  "versionName": "1.8.0",
   "downloadUrl": "https://www.jrpplayer.es/contador.php?app=tube&accion=descargar",
-  "changelog": "Nueva versión 1.6.0\n - Añadido Soundcloud reprodución y Descargas\n - Importación playlist de spotify\n - Varias corerecciones y mejoras\n - Correciones con Android Auto."
+  "changelog": "Nueva versión 1.6.0\n - Mejoras en Android Auto\n - Importación playlist de Soundcloud\n - Varias corerecciones y mejoras\n - Correciones con Android Auto."
 }
