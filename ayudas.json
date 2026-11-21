@@ -1,5 +1,126 @@
 [
     {
+        "id": "943839",
+        "titulo": "CURSOS DE EUSKERA EN CENTROS VASCOS (26/27)",
+        "organismo": "PAÍS VASCO",
+        "ccaa": "AUTONOMICA",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943839"
+    },
+    {
+        "id": "943838",
+        "titulo": "Subv. Nominativa FORO COSITAL 2026- Los Funcionarios con Habilitación de Carácter Nacional ante los nuevos retos en la gestión de servicios eficientes para la ciudadanía-",
+        "organismo": "ANDALUCÍA",
+        "ccaa": "AUTONOMICA",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943838"
+    },
+    {
+        "id": "943837",
+        "titulo": "Convenio de colaboración entre el Ayuntamiento de Puerto Real y la Asociación Pro Derechos Humanos de Andalucía, 2026.",
+        "organismo": "PUERTO REAL",
+        "ccaa": "LOCAL",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943837"
+    },
+    {
+        "id": "943836",
+        "titulo": "Convenio de colaboración entre el Ayuntamiento de Puerto Real y la Asociación Amigos del Pueblo Saharaui ALSAYF, 2026.",
+        "organismo": "PUERTO REAL",
+        "ccaa": "LOCAL",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943836"
+    },
+    {
+        "id": "943834",
+        "titulo": "Convenio de colaboración entre el Ayuntamiento de Puerto Real y la Agencia Internacional Newproject, 2026.",
+        "organismo": "PUERTO REAL",
+        "ccaa": "LOCAL",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943834"
+    },
+    {
+        "id": "943833",
+        "titulo": "BASES REGULADORAS DE LA CONVOCATORIA DE SUBVENCIONES, EN RÉGIMEN DE CONCURRENCIA COMPETITIVA, «PLANTAMOS CARA AL CALOR»",
+        "organismo": "ZARAGOZA",
+        "ccaa": "LOCAL",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943833"
+    },
+    {
+        "id": "943832",
+        "titulo": "Subvención al Ayuntamiento de Pollença prevista en el RD 1016/2026, de 18 de noviembre, de concesión directa de subv en materia de turismo por el MINTUR, ejercicio 2026",
+        "organismo": "MINISTERIO DE INDUSTRIA Y TURISMO",
+        "ccaa": "ESTADO",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943832"
+    },
+    {
+        "id": "943831",
+        "titulo": "Subvención al Ayuntamiento de Quiroga prevista en el RD 1016/2026, de 18 de noviembre, de concesión directa de subv en materia de turismo por el MINTUR, ejercicio 2026",
+        "organismo": "MINISTERIO DE INDUSTRIA Y TURISMO",
+        "ccaa": "ESTADO",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943831"
+    },
+    {
+        "id": "943830",
+        "titulo": "Subvención al Ayuntamiento Lloret de Mar prevista en el RD 1016/2026, de 18 de noviembre, de concesión directa de subv en materia de turismo por el MINTUR, ejercicio 2026",
+        "organismo": "MINISTERIO DE INDUSTRIA Y TURISMO",
+        "ccaa": "ESTADO",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943830"
+    },
+    {
+        "id": "943829",
+        "titulo": "CONVENIO DE COLABORACIÓN ENTRE El AYUNTAMIENTO DE MUXÍA Y LA A.C DE PALILLEIRAS NOSA SEÑORA DA BARCA",
+        "organismo": "MUXÍA",
+        "ccaa": "LOCAL",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943829"
+    },
+    {
+        "id": "943828",
+        "titulo": "Subvención al Ayuntamiento de Pineda prevista en el RD 1016/2026, de 18 de noviembre, de concesión directa de subv en materia de turismo por el MINTUR, ejercicio 2026",
+        "organismo": "MINISTERIO DE INDUSTRIA Y TURISMO",
+        "ccaa": "ESTADO",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-20",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943828"
+    },
+    {
         "id": "943827",
         "titulo": "Subvención al Ayuntamiento Valsequillo de Gran Canaria prevista en el RD 1016/2026, de 18 de noviembre, de concesión directa de subv en materia de turismo por el MINTUR, ejercicio 2026",
         "organismo": "MINISTERIO DE INDUSTRIA Y TURISMO",
@@ -3312,7 +3433,7 @@
     },
     {
         "id": "943517",
-        "titulo": "Subvención a la Fundación ADItech para Organización concurso SCIENCEkaintza y dinamización I+D+i en el sector empresarial",
+        "titulo": "Subvención a la Fundación ADItech para Organización concurso SCIENCEkaintza y dinamización I+D+i en el sector empresarial 2026",
         "organismo": "COMUNIDAD FORAL DE NAVARRA",
         "ccaa": "AUTONOMICA",
         "mrr": false,
@@ -507758,6 +507879,17 @@
         "fecha_inicio_solicitud": null,
         "fecha_fin_solicitud": null,
         "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/896445"
+    },
+    {
+        "id": "896444",
+        "titulo": " Subvención a la formación para la obtención de permisos de conducción C y D",
+        "organismo": "COMUNIDAD FORAL DE NAVARRA",
+        "ccaa": "AUTONOMICA",
+        "mrr": false,
+        "fecha_recepcion": "2026-03-31",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/896444"
     },
     {
         "id": "896443",
