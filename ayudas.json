@@ -1,5 +1,27 @@
 [
     {
+        "id": "943841",
+        "titulo": "Subvenciones para cubrir gastos del transporte de agua mediante camiones cisterna municipios alerta y prealerta sequía",
+        "organismo": "ILLES BALEARS",
+        "ccaa": "AUTONOMICA",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-22",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943841"
+    },
+    {
+        "id": "943840",
+        "titulo": "Subvención nominativa Centro de estudios musicales de Massanassa - CEMM - 2026",
+        "organismo": "MASSANASSA",
+        "ccaa": "LOCAL",
+        "mrr": false,
+        "fecha_recepcion": "2026-11-21",
+        "fecha_inicio_solicitud": null,
+        "fecha_fin_solicitud": null,
+        "url_oficial": "https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/943840"
+    },
+    {
         "id": "943839",
         "titulo": "CURSOS DE EUSKERA EN CENTROS VASCOS (26/27)",
         "organismo": "PAÍS VASCO",
