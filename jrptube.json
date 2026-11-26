@@ -1,6 +1,6 @@
 {
-  "versionCode": 83,
-  "versionName": "1.8.3",
+  "versionCode": 84,
+  "versionName": "1.8.4",
   "downloadUrl": "https://www.jrpplayer.es/contador.php?app=tube&accion=descargar",
-  "changelog": "Nueva versión 1.8.3\n - Si da error, bajarlo de https://www.jrpplayer.es\n - Se Recomienda siempre hacer copia de seguridad de las listas de Reprodución\n - Mejoras en Android Auto\n - Importación playlist de Soundcloud Mejorada\n - Varias corerecciones y mejoras\n - Correciones con Android Auto."
+  "changelog": "Nueva versión 1.8.4\n - Si da error, bajarlo de https://www.jrpplayer.es\n - Se Recomienda siempre hacer copia de seguridad de las listas de Reprodución\n - Novedad: se han añadido para poder reproducir Podcasts y añadirlos a Biblioteca!!\n - Importación playlist de Soundcloud Mejorada ahora con url de perfil\n - Varias corerecciones y mejoras con pistas de Soundcloud\n - Correciones con Android Auto."
 }
